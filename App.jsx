@@ -1,311 +1,242 @@
-import { Category2, Clock, Message, MusicDashboard, Receipt1, Receipt2, SearchNormal1 } from "iconsax-react-native"
-import { Dimensions, Image, ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, TouchableOpacity, View } from "react-native"
-import { colors, fontType } from "./src/theme"
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet, Text, View, Image, ImageBackground, TextInput, Pressable, TouchableOpacity, FlatList } from 'react-native';
+import { Element3, Receipt21, Clock, Message, SearchNormal, Notification } from 'iconsax-react-native';
+import { fontType, colors } from './src/theme';
+import { CategoryList, BlogList } from './src/data';
+import { ListHorizontal, ItemSmall } from './src/components';
+
+const ItemCategory = ({ item, onPress, color }) => {
+    return (
+        <TouchableOpacity onPress={onPress}>
+            <View style={category.item}>
+                <Text style={{ ...category.title, color }}>{item.categoryName}</Text>
+            </View>
+        </TouchableOpacity>
+    );
+};
+
+const FlatListCategory = () => {
+    const [selected, setSelected] = useState(1);
+    const renderItem = ({ item }) => {
+        const color = item.id === selected ? colors.blue() : colors.grey();
+         return (
+            <ItemCategory
+                item={item}
+                onPress={() => setSelected(item.id)}
+                color={color}
+            />
+        );
+    };
+    return (
+        <FlatList
+            data={CategoryList}
+            keyExtractor={item => item.id}
+            renderItem={item => renderItem({ ...item })}
+            ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+            contentContainerStyle={{ paddingHorizontal: 24 }}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+        />
+    );
+};
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={stylesHeader.container}>
-        <Text style={stylesHeader.title}>
-          WOCO.
-        </Text>
-        <Category2 size={24} />
-      </View>
-
-      <View style={{
-        marginHorizontal: 16,
-        borderColor: '#ededed',
-        borderWidth: 1,
-        borderRadius: 12,
-        flexDirection: 'row',
-        overflow: 'hidden',
-      }}>
-        <TextInput placeholder="Search" style={{ flex: 1, paddingLeft: 9, }} />
-        <TouchableHighlight style={{ backgroundColor: colors.blue(), padding: 9, }}>
-          <SearchNormal1 color="white" />
-        </TouchableHighlight>
-      </View>
-
-      <View style={{ paddingVertical: 12, }}>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <View style={{ width: 16, }} />
-          <View style={{ backgroundColor: colors.grey(0.2), padding: 12, borderRadius: 32, marginRight: 16, }}>
-            <Text style={{ color: colors.blue(), fontFamily: fontType["Pjs-Bold"], includeFontPadding: false, }}>Popular</Text>
-          </View>
-
-          <View style={{ backgroundColor: colors.grey(0.2), padding: 12, borderRadius: 32, marginRight: 16, }}>
-            <Text style={{ color: colors.grey(), fontFamily: fontType["Pjs-Bold"], includeFontPadding: false, }}>Trending</Text>
-          </View>
-
-          <View style={{ backgroundColor: colors.grey(0.2), padding: 12, borderRadius: 32, marginRight: 16, }}>
-            <Text style={{ color: colors.grey(), fontFamily: fontType["Pjs-Bold"], includeFontPadding: false, }}>Technology</Text>
-          </View>
-
-          <View style={{ backgroundColor: colors.grey(0.2), padding: 12, borderRadius: 32, marginRight: 16, }}>
-            <Text style={{ color: colors.grey(), fontFamily: fontType["Pjs-Bold"], includeFontPadding: false, }}>Popular</Text>
-          </View>
-
-          <View style={{ backgroundColor: colors.grey(0.2), padding: 12, borderRadius: 32, marginRight: 16, }}>
-            <Text style={{ color: colors.grey(), fontFamily: fontType["Pjs-Bold"], includeFontPadding: false, }}>Popular</Text>
-          </View>
-
-          <View style={{ backgroundColor: colors.grey(0.2), padding: 12, borderRadius: 32, marginRight: 16, }}>
-            <Text style={{ color: colors.grey(), fontFamily: fontType["Pjs-Bold"], includeFontPadding: false, }}>Popular</Text>
-          </View>
-
-          <View style={{ backgroundColor: colors.grey(0.2), padding: 12, borderRadius: 32, marginRight: 16, }}>
-            <Text style={{ color: colors.grey(), fontFamily: fontType["Pjs-Bold"], includeFontPadding: false, }}>Popular</Text>
-          </View>
-        </ScrollView>
-      </View>
-
-      <ScrollView>
-
-        <View>
-
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={{ width: 16, }} />
-            <ImageBackground borderRadius={16} style={{ marginRight: 16, justifyContent: 'space-between', padding: 16, width: Dimensions.get('screen').width - 32, height: (Dimensions.get('screen').width - 32) * (9 / 16) }}
-              source={{ uri: 'https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}>
-              <View style={{ justifyContent: 'flex-end', flexDirection: 'row', }}>
-                <TouchableOpacity style={{ padding: 8, backgroundColor: colors.white(0.2), borderWidth: 1, borderColor: 'white', borderRadius: 8, }}>
-                  <Receipt1 color="white" size={18} />
-                </TouchableOpacity>
-              </View>
-
-              <View>
-                <Text style={{ color: colors.white(), fontFamily: fontType["Pjs-Bold"], fontSize: 18, }}>Programming with a Coffe and Notes</Text>
-                <Text style={{ color: colors.white(), fontFamily: fontType["Pjs-Regular"], fontSize: 12, }}>Now 10, 2025</Text>
-              </View>
-            </ImageBackground>
-
-            <ImageBackground borderRadius={16} style={{ marginRight: 16, justifyContent: 'space-between', padding: 16, width: Dimensions.get('screen').width - 32, height: (Dimensions.get('screen').width - 32) * (9 / 16) }}
-              source={{ uri: 'https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}>
-              <View style={{ justifyContent: 'flex-end', flexDirection: 'row', }}>
-                <TouchableOpacity style={{ padding: 8, backgroundColor: colors.white(0.2), borderWidth: 1, borderColor: 'white', borderRadius: 8, }}>
-                  <Receipt1 color="white" size={18} />
-                </TouchableOpacity>
-              </View>
-
-              <View>
-                <Text style={{ color: colors.white(), fontFamily: fontType["Pjs-Bold"], fontSize: 18, }}>Programming with a Coffe and Notes</Text>
-                <Text style={{ color: colors.white(), fontFamily: fontType["Pjs-Regular"], fontSize: 12, }}>Now 10, 2025</Text>
-              </View>
-            </ImageBackground>
-
-            <ImageBackground borderRadius={16} style={{ marginRight: 16, justifyContent: 'space-between', padding: 16, width: Dimensions.get('screen').width - 32, height: (Dimensions.get('screen').width - 32) * (9 / 16) }}
-              source={{ uri: 'https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}>
-              <View style={{ justifyContent: 'flex-end', flexDirection: 'row', }}>
-                <TouchableOpacity style={{ padding: 8, backgroundColor: colors.white(0.2), borderWidth: 1, borderColor: 'white', borderRadius: 8, }}>
-                  <Receipt1 color="white" size={18} />
-                </TouchableOpacity>
-              </View>
-
-              <View>
-                <Text style={{ color: colors.white(), fontFamily: fontType["Pjs-Bold"], fontSize: 18, }}>Programming with a Coffe and Notes</Text>
-                <Text style={{ color: colors.white(), fontFamily: fontType["Pjs-Regular"], fontSize: 12, }}>Now 10, 2025</Text>
-              </View>
-            </ImageBackground>
-
-
-            <ImageBackground borderRadius={16} style={{ marginRight: 16, justifyContent: 'space-between', padding: 16, width: Dimensions.get('screen').width - 32, height: (Dimensions.get('screen').width - 32) * (9 / 16) }}
-              source={{ uri: 'https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}>
-              <View style={{ justifyContent: 'flex-end', flexDirection: 'row', }}>
-                <TouchableOpacity style={{ padding: 8, backgroundColor: colors.white(0.2), borderWidth: 1, borderColor: 'white', borderRadius: 8, }}>
-                  <Receipt1 color="white" size={18} />
-                </TouchableOpacity>
-              </View>
-
-              <View>
-                <Text style={{ color: colors.white(), fontFamily: fontType["Pjs-Bold"], fontSize: 18, }}>Programming with a Coffe and Notes</Text>
-                <Text style={{ color: colors.white(), fontFamily: fontType["Pjs-Regular"], fontSize: 12, }}>Now 10, 2025</Text>
-              </View>
-            </ImageBackground>
-
-            <ImageBackground borderRadius={16} style={{ marginRight: 16, justifyContent: 'space-between', padding: 16, width: Dimensions.get('screen').width - 32, height: (Dimensions.get('screen').width - 32) * (9 / 16) }}
-              source={{ uri: 'https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}>
-              <View style={{ justifyContent: 'flex-end', flexDirection: 'row', }}>
-                <TouchableOpacity style={{ padding: 8, backgroundColor: colors.white(0.2), borderWidth: 1, borderColor: 'white', borderRadius: 8, }}>
-                  <Receipt1 color="white" size={18} />
-                </TouchableOpacity>
-              </View>
-
-              <View>
-                <Text style={{ color: colors.white(), fontFamily: fontType["Pjs-Bold"], fontSize: 18, }}>Programming with a Coffe and Notes</Text>
-                <Text style={{ color: colors.white(), fontFamily: fontType["Pjs-Regular"], fontSize: 12, }}>Now 10, 2025</Text>
-              </View>
-            </ImageBackground>
-          </ScrollView>
+    return (
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.title}>WOCO.</Text>
+                <Notification color={colors.black()} variant="Linear" size={24} />
+            </View>
+            <View style={searchBar.container}>
+                <TextInput
+                    style={searchBar.input}
+                    placeholder="Search"
+                />
+                <Pressable style={searchBar.button}>
+                    <SearchNormal size={20} color={colors.white()} />
+                </Pressable>
+            </View>
+            <View style={styles.listCategory}>
+                <FlatListCategory />
+            </View>
+            <ListBlog /> 
         </View>
-
-        <View style={{marginTop: 16, marginHorizontal: 16, gap: 16, }}>
-          <View style={{ flexDirection: 'row', backgroundColor: colors.grey(0.05), borderRadius: 8, overflow: 'hidden' }}>
-            <Image borderRadius={8} style={{ width: 100, height: 100, }} source={{ uri: 'https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }} />
-
-            <View style={{ justifyContent: 'space-between', marginLeft: 16, paddingVertical: 8 }}>
-              <Text style={{ color: colors.blue(), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, }}>
-                Technology
-              </Text>
-
-              <Text style={{ color: colors.black(), fontFamily: fontType["Pjs-Bold"], fontSize: 16, }}>
-                Best Setup for 2025
-              </Text>
-
-              <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-                <Clock size={14} color={colors.grey(0.7)} />
-                <Text style={{ color: colors.blue(0.8), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, includeFontPadding: false, }}>
-                  Jul, 2025
-                </Text>
-                <Message size={14} color={colors.grey(0.7)} />
-                <Text style={{ color: colors.blue(0.8), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, includeFontPadding: false, }}>
-                  Jul, 2025
-                </Text>
-              </View>
-
-            </View>
-
-            <Receipt2 style={{ marginLeft: 'auto', marginRight: 16, marginTop: 8, }} color={colors.grey(0.8)} />
-          </View>
-
-          <View style={{ flexDirection: 'row', backgroundColor: colors.grey(0.05), borderRadius: 8, overflow: 'hidden' }}>
-            <Image borderRadius={8} style={{ width: 100, height: 100, }} source={{ uri: 'https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }} />
-
-            <View style={{ justifyContent: 'space-between', marginLeft: 16, paddingVertical: 8 }}>
-              <Text style={{ color: colors.blue(), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, }}>
-                Technology
-              </Text>
-
-              <Text style={{ color: colors.black(), fontFamily: fontType["Pjs-Bold"], fontSize: 16, }}>
-                Best Setup for 2025
-              </Text>
-
-              <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-                <Clock size={14} color={colors.grey(0.7)} />
-                <Text style={{ color: colors.blue(0.8), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, includeFontPadding: false, }}>
-                  Jul, 2025
-                </Text>
-                <Message size={14} color={colors.grey(0.7)} />
-                <Text style={{ color: colors.blue(0.8), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, includeFontPadding: false, }}>
-                  Jul, 2025
-                </Text>
-              </View>
-
-            </View>
-
-            <Receipt2 style={{ marginLeft: 'auto', marginRight: 16, marginTop: 8, }} color={colors.grey(0.8)} />
-          </View>
-
-
-          <View style={{ flexDirection: 'row', backgroundColor: colors.grey(0.05), borderRadius: 8, overflow: 'hidden' }}>
-            <Image borderRadius={8} style={{ width: 100, height: 100, }} source={{ uri: 'https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }} />
-
-            <View style={{ justifyContent: 'space-between', marginLeft: 16, paddingVertical: 8 }}>
-              <Text style={{ color: colors.blue(), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, }}>
-                Technology
-              </Text>
-
-              <Text style={{ color: colors.black(), fontFamily: fontType["Pjs-Bold"], fontSize: 16, }}>
-                Best Setup for 2025
-              </Text>
-
-              <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-                <Clock size={14} color={colors.grey(0.7)} />
-                <Text style={{ color: colors.blue(0.8), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, includeFontPadding: false, }}>
-                  Jul, 2025
-                </Text>
-                <Message size={14} color={colors.grey(0.7)} />
-                <Text style={{ color: colors.blue(0.8), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, includeFontPadding: false, }}>
-                  Jul, 2025
-                </Text>
-              </View>
-
-            </View>
-
-            <Receipt2 style={{ marginLeft: 'auto', marginRight: 16, marginTop: 8, }} color={colors.grey(0.8)} />
-          </View>
-
-
-          <View style={{ flexDirection: 'row', backgroundColor: colors.grey(0.05), borderRadius: 8, overflow: 'hidden' }}>
-            <Image borderRadius={8} style={{ width: 100, height: 100, }} source={{ uri: 'https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }} />
-
-            <View style={{ justifyContent: 'space-between', marginLeft: 16, paddingVertical: 8 }}>
-              <Text style={{ color: colors.blue(), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, }}>
-                Technology
-              </Text>
-
-              <Text style={{ color: colors.black(), fontFamily: fontType["Pjs-Bold"], fontSize: 16, }}>
-                Best Setup for 2025
-              </Text>
-
-              <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-                <Clock size={14} color={colors.grey(0.7)} />
-                <Text style={{ color: colors.blue(0.8), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, includeFontPadding: false, }}>
-                  Jul, 2025
-                </Text>
-                <Message size={14} color={colors.grey(0.7)} />
-                <Text style={{ color: colors.blue(0.8), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, includeFontPadding: false, }}>
-                  Jul, 2025
-                </Text>
-              </View>
-
-            </View>
-
-            <Receipt2 style={{ marginLeft: 'auto', marginRight: 16, marginTop: 8, }} color={colors.grey(0.8)} />
-          </View>
-
-
-          <View style={{ flexDirection: 'row', backgroundColor: colors.grey(0.05), borderRadius: 8, overflow: 'hidden' }}>
-            <Image borderRadius={8} style={{ width: 100, height: 100, }} source={{ uri: 'https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }} />
-
-            <View style={{ justifyContent: 'space-between', marginLeft: 16, paddingVertical: 8 }}>
-              <Text style={{ color: colors.blue(), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, }}>
-                Technology
-              </Text>
-
-              <Text style={{ color: colors.black(), fontFamily: fontType["Pjs-Bold"], fontSize: 16, }}>
-                Best Setup for 2025
-              </Text>
-
-              <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-                <Clock size={14} color={colors.grey(0.7)} />
-                <Text style={{ color: colors.blue(0.8), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, includeFontPadding: false, }}>
-                  Jul, 2025
-                </Text>
-                <Message size={14} color={colors.grey(0.7)} />
-                <Text style={{ color: colors.blue(0.8), fontFamily: fontType["Pjs-SemiBold"], fontSize: 12, includeFontPadding: false, }}>
-                  Jul, 2025
-                </Text>
-              </View>
-
-            </View>
-
-            <Receipt2 style={{ marginLeft: 'auto', marginRight: 16, marginTop: 8, }} color={colors.grey(0.8)} />
-          </View>
-        </View>
-      </ScrollView>
-
-    </View>
-  )
+    );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: colors.white(),
   },
-})
-
-const stylesHeader = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
+  header: {
+    paddingHorizontal: 24,
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    flexDirection: 'row',
     alignItems: 'center',
+    height:52,
+    elevation: 8,
+    paddingTop:8,
+    paddingBottom:4
   },
   title: {
-    fontFamily: fontType["Pjs-Bold"],
-    fontSize: 16,
+    fontSize: 20,
+    fontFamily: fontType['Pjs-ExtraBold'],
+    color: colors.black(),
   },
-})
+  listCategory: {
+    paddingVertical: 10,
+  },
+  listBlog: {
+    paddingVertical: 10,
+    gap: 10,
+  },
+  listCard: {
+    paddingHorizontal: 24,
+    paddingVertical: 10,
+    gap: 15,
+  },
+});
+const category = StyleSheet.create({
+  item: {
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 25,
+    alignItems: 'center',
+    backgroundColor: colors.grey(0.08),
+  },
+  title: {
+    fontFamily: fontType['Pjs-SemiBold'],
+    fontSize: 14,
+    lineHeight: 18,
+  },
+});
+
+const searchBar = StyleSheet.create({
+    container: {
+        marginHorizontal: 24,
+        backgroundColor: colors.grey(0.03),
+        borderColor: colors.grey(0.2),
+        borderRadius: 10,
+        borderWidth: 1,
+        flexDirection: 'row',
+    },
+    input: {
+        height: 40,
+        padding: 10,
+        width: '90%',
+    },
+    button: {
+        backgroundColor: colors.blue(),
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 40,
+        width: 40,
+        borderTopRightRadius: 10,
+        borderBottomRightRadius: 10,
+    },
+});
+
+const ListBlog = () => {
+    const horizontalData = BlogList.slice(0, 5);
+    const verticalData = BlogList.slice(5);
+    return (
+        <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.listBlog}>
+                <ListHorizontal data={horizontalData} />
+                <View style={styles.listCard}>
+                    {verticalData.map((item, index) => (
+                        <ItemSmall item={item} key={index} />
+                    ))}
+                </View>
+            </View>
+        </ScrollView>
+    );
+};
+
+
+const itemVertical = StyleSheet.create({
+    listCard: {
+        paddingHorizontal: 24,
+        paddingVertical: 10,
+        gap: 15,
+    },
+    cardItem: {
+        backgroundColor: colors.blue(0.03),
+        flexDirection: 'row',
+        borderRadius: 10,
+    },
+    cardCategory: {
+        color: colors.blue(),
+        fontSize: 10,
+        fontFamily: fontType['Pjs-SemiBold'],
+    },
+    cardTitle: {
+        fontSize: 14,
+        fontFamily: fontType['Pjs-Bold'],
+        color: colors.black(),
+    },
+    cardText: {
+        fontSize: 10,
+        fontFamily: fontType['Pjs-Medium'],
+        color: colors.blue(0.6),
+    },
+    cardImage: {
+        width: 94,
+        height: 94,
+        borderRadius: 10,
+        resizeMode: 'cover',
+    },
+    cardInfo: {
+        flexDirection: 'row',
+        gap: 5,
+        alignItems: 'center',
+    },
+    cardContent: {
+        gap: 10,
+        justifyContent: 'space-between',
+        paddingRight: 10,
+        paddingLeft: 15,
+        flex: 1,
+        paddingVertical: 10,
+    },
+});
+const itemHorizontal = StyleSheet.create({
+    cardItem: {
+        width: 280,
+    },
+    cardImage: {
+        width: '100%',
+        height: 200,
+        borderRadius: 5,
+    },
+    cardContent: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 15,
+    },
+    cardInfo: {
+        justifyContent: 'flex-end',
+        height: '100%',
+        gap: 10,
+        maxWidth: '60%',
+    },
+    cardTitle: {
+        fontFamily: fontType['Pjs-Bold'],
+        fontSize: 14,
+        color: colors.white(),
+    },
+    cardText: {
+        fontSize: 10,
+        color: colors.white(),
+        fontFamily: fontType['Pjs-Medium'],
+    },
+    cardIcon: {
+        backgroundColor: colors.white(0.33),
+        padding: 5,
+        borderColor: colors.white(),
+        borderWidth: 0.5,
+        borderRadius: 5,
+    },
+});
+
